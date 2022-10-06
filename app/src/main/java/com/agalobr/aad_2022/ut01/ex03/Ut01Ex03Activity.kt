@@ -7,6 +7,7 @@ import android.util.Log
 
 import com.agalobr.aad_2022.ut01.ex03.data.NewsLocalSource
 import com.agalobr.aad_2022.ut01.ex03.domain.News
+import com.agalobr.aad_2022.ut01.ex04.SecureSharedPreferences
 
 
 class Ut01Ex03Activity : AppCompatActivity() {
@@ -33,15 +34,21 @@ class Ut01Ex03Activity : AppCompatActivity() {
     }
 
     private fun initWithList(){
-        val newsList: MutableList<News> = mutableListOf<News>()
-            News (1,"Titulo1", "Subtitle1", "Summary1")
-            News (2,"Titulo2", "Subtitle2", "Summary2")
-            News (3,"Titulo3", "Subtitle3", "Summary3")
+        val newsList: MutableList<News> = mutableListOf<News>(
+            News(1,"Titulo1", "Subtitle1", "Summary1"),
+            News(2,"Titulo2", "Subtitle2", "Summary2"),
+            News(3,"Titulo3", "Subtitle3", "Summary3"),
+        )
 
         val newsLocalSource = NewsLocalSource(
             getPreferences(Context.MODE_PRIVATE)
         )
         newsLocalSource.setNewsList(newsList)
+        newsLocalSource.findAll()
+    }
+    private fun secure() {
+        val secure = SecureSharedPreferences(applicationContext)
+        secure.saveNews(News(1, "News1", "News1", "News1"))
     }
 
 }

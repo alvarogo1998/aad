@@ -3,22 +3,24 @@ package com.agalobr.aad_2022.ut01.ex03.data
 import android.content.SharedPreferences
 import com.agalobr.aad_2022.ut01.ex03.domain.News
 import com.google.gson.Gson
+import java.lang.reflect.Type
+import com.google.gson.reflect.TypeToken
 
 class NewsLocalSource (val sharedPref: SharedPreferences) {
 
+    private val gson = Gson()
+
     fun setNews(news: News){
 
-        val gson = Gson()
         val jsonNews = gson.toJson(news, News::class.java)
 
 
         val edit = sharedPref.edit()
-            edit.putString(news.id.toString(), jsonNews )
+            edit.putString(news.id.toString(), jsonNews)
             edit.apply()
 
     }
     fun findById(newsId: Int): News{
-        val gson = Gson()
 
         val jsonNews = sharedPref.getString(newsId.toString(),"")
 
@@ -26,12 +28,29 @@ class NewsLocalSource (val sharedPref: SharedPreferences) {
 
     }
     fun setNewsList(newsList:MutableList<News>){
-        newsList.forEach(
-
-        )
+        val jsonNews = gson.toJson(newsList)
+        val edit = sharedPref.edit()
+        edit.putString("ALL", jsonNews)
+        edit.apply()
     }
-    fun findAll() : MutableList<News>{
+    fun findAll() : MutableList<News> {
         //Buscar y devolver todas las noticias
-        return mutableListOf()
+        val newsList = mutableListOf<News>()
+        sharedPref.all.forEach { entry ->
+            val news = gson.fromJson(entry.value as String, News::class.java)
+            newsList.add(news)
+            return mutableListOf()
+        }
     }
+
+    fun findAllV2(): MutableList<News> {
+        val jsonNews = sharedPref.getString("ALL", "")
+
+        val typeNews: Type = object : TypeToken<MutableList<News>>() {}.type
+        return gson.fromJson(jsonNews, typeNews)
+    }
+
+    fun findAllKotlin() = sharedPref.all.map { entry ->
+        gson.fromJson(entry.value as String, News::class.java)
+    }.toMutableList()
 }
