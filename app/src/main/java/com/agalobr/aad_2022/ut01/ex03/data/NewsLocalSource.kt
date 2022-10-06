@@ -14,7 +14,6 @@ class NewsLocalSource (val sharedPref: SharedPreferences) {
 
         val jsonNews = gson.toJson(news, News::class.java)
 
-
         val edit = sharedPref.edit()
             edit.putString(news.id.toString(), jsonNews)
             edit.apply()
@@ -33,14 +32,22 @@ class NewsLocalSource (val sharedPref: SharedPreferences) {
         edit.putString("ALL", jsonNews)
         edit.apply()
     }
+
+    fun setNewsListV2(newsList: MutableList<News>) {
+        val jsonNews = gson.toJson(newsList)
+        val edit = sharedPref.edit()
+        edit.putString("ALL", jsonNews)
+        edit.apply()
+    }
+
     fun findAll() : MutableList<News> {
         //Buscar y devolver todas las noticias
         val newsList = mutableListOf<News>()
         sharedPref.all.forEach { entry ->
             val news = gson.fromJson(entry.value as String, News::class.java)
             newsList.add(news)
-            return mutableListOf()
         }
+        return newsList
     }
 
     fun findAllV2(): MutableList<News> {

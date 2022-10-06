@@ -26,7 +26,7 @@
         </activity>
         <activity
             android:name=".ut01.ex03.Ut01Ex03Activity"
-            android:exported="false">
+            android:exported="true">
 
             <meta-data
                 android:name="android.app.lib_name"
@@ -34,14 +34,14 @@
         </activity>
         <activity
             android:name=".ut01.ex02.presentation.Ut01Ex02"
-            android:exported="false">
+            android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".ut01.ex01.presentation.Ut01Ex01Activity"
-            android:exported="false">
+            android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
