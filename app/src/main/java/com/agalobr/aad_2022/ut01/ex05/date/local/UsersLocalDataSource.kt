@@ -1,48 +1,40 @@
 package com.agalobr.aad_2022.ut01.ex05.date.local
 
 import android.content.SharedPreferences
+import com.agalobr.aad_2022.ut01.ex03.domain.News
 import com.agalobr.aad_2022.ut01.ex05.domain.User
 import com.google.gson.Gson
 
-<<<<<<< HEAD
-class UsersLocalDataSource (private val sharedPref: SharedPreferences){
 
-    private val gson = Gson()
-
-    fun saveUsers(user: List<User>){
-=======
 class UsersLocalDataSource (val sharedPref: SharedPreferences){
 
     private val gson = Gson()
 
-    fun saveUsers(user: User){
->>>>>>> origin/master
-        //TODO
+    fun saveUsers(users: List<User>) {
+        users.forEach {
+            saveUser(it)
+        }
+    }
+    fun saveUser(user: User){
         val jsonUsers = gson.toJson(user, User::class.java)
-
         val edit = sharedPref.edit()
-            edit.putString(user.id.toString(), jsonUsers)
-            edit.apply()
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
+        edit.putString(user.id.toString(), jsonUsers)
+        edit.apply()
     }
 
     fun getUsers(): List<User>{
-        //TODO
-        return emptyList()
+        val userList = mutableListOf<User>()
+        sharedPref.all.forEach { entry ->
+            val users = gson.fromJson(entry.value as String, User::class.java)
+            userList.add(users)
+        }
+        return userList
     }
 
-<<<<<<< HEAD
-    //fun findById(userId: Int): User{
-        //TODO return a user
-    //}
-=======
     fun findById(userId: Int): User{
-        //TODO return a user
+        val jsonUser = sharedPref.getString(userId.toString(),"")
+        return gson.fromJson(jsonUser, User::class.java)
     }
->>>>>>> origin/master
 
     fun remove(userId: Int){
         //TODO
