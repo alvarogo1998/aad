@@ -15,7 +15,6 @@ class UserRepository (
      **/
 
     fun getUsers(): List<User> {
-
         var users= localSource.getUsers()
         if(users.isEmpty()){
             users= remoteSource.getUsers()
@@ -24,19 +23,18 @@ class UserRepository (
         return users
     }
 
-
     fun getUserById(userId: Int) : User{
-        //TODO: verificar en local sino en remote
-        var user1= localSource.findById(1)
-        if(user1.isEmpty()){
-            user1= remoteSource.getUsers()
-            localSource.saveUsers(user1)
+        //TODO: verificar en local si no en remote
+        var userById= localSource.findById(userId)
+        if(userById == null){
+            userById= remoteSource.getUser(userId)
+            localSource.saveUser(userById)
         }
-        return user1
+        return userById
     }
 
-
-    fun removeUser(userId: Int){
+    fun removeUser(removeUserId: Int){
         //TODO (local)
+        localSource.remove(removeUserId)
     }
 }

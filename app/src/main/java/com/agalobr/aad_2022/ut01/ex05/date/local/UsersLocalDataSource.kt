@@ -1,7 +1,6 @@
 package com.agalobr.aad_2022.ut01.ex05.date.local
 
 import android.content.SharedPreferences
-import com.agalobr.aad_2022.ut01.ex03.domain.News
 import com.agalobr.aad_2022.ut01.ex05.domain.User
 import com.google.gson.Gson
 
@@ -23,20 +22,21 @@ class UsersLocalDataSource (val sharedPref: SharedPreferences){
     }
 
     fun getUsers(): List<User>{
-        val userList = mutableListOf<User>()
+        val users = mutableListOf<User>()
         sharedPref.all.forEach { entry ->
-            val users = gson.fromJson(entry.value as String, User::class.java)
-            userList.add(users)
+            users.add( gson.fromJson(entry.value as String, User::class.java))
         }
-        return userList
+        return users
     }
 
-    fun findById(userId: Int): User{
-        val jsonUser = sharedPref.getString(userId.toString(),"")
-        return gson.fromJson(jsonUser, User::class.java)
+    fun findById(userId: Int): User?{
+        val user: String? = sharedPref.getString(userId.toString(), null)
+        return user?.let {
+            gson.fromJson(it, User::class.java)
+        }
     }
 
-    fun remove(userId: Int){
-        //TODO
+    fun remove(removeUserId: Int){
+        sharedPref.edit().remove(removeUserId.toString())
     }
 }
