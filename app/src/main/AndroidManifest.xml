@@ -12,7 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AAD2022"
         tools:targetApi="31">
-
+        <activity
+            android:name=".ut01Ex06Activity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".ut01.ex06.presentation.Ut01Ex06Activity"
             android:exported="true">
@@ -21,23 +27,21 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name=".ut01.ex05.presentation.Ut01Ex05Activity"
             android:exported="true">
-
-        <meta-data
-            android:name="android.app.lib_name"
-            android:value="" />
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
         </activity>
         <activity
             android:name=".ut01.ex03.Ut01Ex03Activity"
             android:exported="true">
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -48,12 +52,10 @@
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
-
         </activity>
         <activity
             android:name=".ut01.ex01.presentation.Ut01Ex01Activity"
             android:exported="true">
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
